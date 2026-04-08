@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="modded.pw — Mod menu library.">
+  <title>🚀 modded.pw</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="img/favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/"><span class="logo-dot"></span>modded.pw</a>
+  <div class="header-right">
+    <span class="header-count" id="header-count"></span>
+    <a class="yt-btn" href="https://youtube.com/@serphantshowcases" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      YouTube
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <p class="hero-eyebrow">// library</p>
+    <h1>Every mod showcased.<br><em>All in one place.</em></h1>
+    <p>Browse, preview, and download every mod showcased on the channel. Filter by console and game to find exactly what you need.</p>
+  </section>
+
+  <!-- ── SHOWCASE ── -->
+  <section class="showcase-wrap">
+    <div class="showcase-card">
+      <div class="showcase-text">
+        <p class="showcase-eyebrow">// featured tool</p>
+        <h2 class="showcase-title">Black Ops II<br><em>Recovery Tool</em></h2>
+        <p class="showcase-body">
+          A quick and easy to use recovery tool for PS3 and Xbox 360 —
+          connect your console, edit in game stats, monitor
+          temperatures in real time, and manage everything from a
+          clean and simple interface.
+        </p>
+        <div class="showcase-actions">
+          <a class="sc-btn sc-btn-primary" href="#grid">Download</a>
+          <a class="sc-btn sc-btn-secondary" href="https://www.youtube.com/watch?v=09fMOJCM4zM" target="_blank" rel="noopener">Watch on YouTube</a>
+        </div>
+      </div>
+      <div class="showcase-img-wrap">
+        <img class="showcase-img" src="img/recovery-tool.png" alt="Serphant Recovery Tool screenshot">
+      </div>
+    </div>
+  </section>
+
+  <div class="filter-panel">
+    <div class="filter-row">
+      <span class="filter-label">Search</span>
+      <div class="search-wrap">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search" placeholder="search mods…" autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+    <div class="hr-thin"></div>
+    <div class="filter-row">
+      <span class="filter-label">Console</span>
+      <button class="chip chip-ps3"  data-plat="ps3">PlayStation 3</button>
+      <button class="chip chip-x360" data-plat="x360">Xbox 360</button>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Game</span>
+      <div id="game-filter-row" style="display:contents"></div>
+    </div>
+  </div>
+
+  <div class="pill-bar" id="pill-bar">
+    <span class="pill-hint">// select console and / or game to filter</span>
+  </div>
+
+  <div class="stats-bar">
+    <span><strong id="visible-count">0</strong>&nbsp;results</span>
+    <span>page <strong id="page-label">1 / 1</strong></span>
+    <div class="stats-bar-right">
+      <!-- per-page selector -->
+      <div class="per-page-wrap">
+        <span class="per-page-label">Show</span>
+        <select id="per-page-select" onchange="setPerPage(this.value)">
+          <option value="9"  selected>9</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="0">All</option>
+        </select>
+      </div>
+      <!-- view toggle -->
+      <div class="view-toggle">
+        <button class="view-btn on" id="btn-grid" onclick="setView('grid')" title="Grid view">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="10" y="0" width="6" height="6" rx="1"/><rect x="0" y="10" width="6" height="6" rx="1"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>
+        </button>
+        <button class="view-btn" id="btn-table" onclick="setView('table')" title="Table view">
+          <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor"><rect x="0" y="0" width="16" height="3" rx="1"/><rect x="0" y="5" width="16" height="3" rx="1"/><rect x="0" y="10" width="16" height="3" rx="1"/><rect x="0" y="15" width="16" height="1" rx="0.5"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-wrap" id="grid-wrap">
+    <div class="grid" id="grid">
+      <div class="empty" id="empty">
+        <p>// no matches</p>
+        <span>try adjusting the filters above</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- table view -->
+  <div class="table-wrap" id="table-wrap" style="display:none">
+    <table class="files-table" id="files-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Games</th>
+          <th>Consoles</th>
+          <th>File</th>
+          <th>Size</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+    <div class="empty table-empty" id="empty-table">
+      <p>// no matches</p>
+      <span>try adjusting the filters above</span>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button class="pg-arrow" id="prev" disabled onclick="shiftPage(-1)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="pg-btn on" data-p="1" onclick="goPage(1)">1</button>
+    <button class="pg-btn"    data-p="2" onclick="goPage(2)">2</button>
+    <button class="pg-btn"    data-p="3" onclick="goPage(3)">3</button>
+    <button class="pg-arrow"  id="next"  onclick="shiftPage(1)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <section class="donate-wrap">
+    <div class="donate-card">
+      <div>
+        <p class="donate-eyebrow">// support my content</p>
+        <h2 class="donate-title">Want to support me?</h2>
+        <p class="donate-body">If you enjoy my content, subscribing to the channel is an easy way to show your support — it only takes a few seconds and goes a long way! And if you’d like to support even more, donations via Bitcoin are always welcome and greatly appreciated.</p>
+      </div>
+      <div class="donate-actions">
+        <a class="d-btn d-btn-primary"    href="https://www.youtube.com/@serphantshowcases"  target="_blank" rel="noopener">Subscribe to YouTube</a>
+<a class="d-btn d-btn-secondary" data-text="bc1qyf8lup404jslyv32hfukz2aykekrvskzw3lqvr" onclick="copyText(this)">Bitcoin</a>      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lb-box">
+
+    <button class="lb-close" onclick="closeLightbox()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- media area -->
+    <div class="lb-media">
+      <!-- image view -->
+      <div id="lb-img-wrap" class="lb-img">
+        <img id="lb-img-el" src="" alt="">
+      </div>
+      <!-- youtube embed view -->
+      <div id="lb-yt-wrap" class="lb-yt-wrap" style="display:none">
+        <iframe id="lb-yt-frame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="lb-yt-label" id="lb-yt-label"></div>
+      </div>
+      <!-- nav arrows -->
+      <button class="lb-nav lb-nav-prev" id="lb-prev" onclick="lbNav(-1)" style="display:none">&#8249;</button>
+      <button class="lb-nav lb-nav-next" id="lb-next" onclick="lbNav(1)"  style="display:none">&#8250;</button>
+    </div>
+
+    <!-- dots -->
+    <div class="lb-dots" id="lb-dots" style="display:none"></div>
+
+    <div class="lb-foot">
+      <div>
+        <div class="lb-title-text" id="lb-title-el"></div>
+        <div class="lb-meta-row">
+          <span class="lb-sub" id="lb-sub-el"></span>
+          <span class="plat-badge pb-ps3"  id="lb-ps3"  style="display:none">PS3</span>
+          <span class="plat-badge pb-x360" id="lb-x360" style="display:none">X360</span>
+        </div>
+      </div>
+      <div class="lb-actions">
+        <button class="btn btn-copy" id="lb-copy-btn"><svg class="i" viewBox="0 0 24 24" width="10" height="10"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>COPY</button>
+        <a class="btn btn-yt" id="lb-yt-btn" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor" stroke="none"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>WATCH</a>
+        <button class="btn btn-dl" id="lb-dl-btn"><svg class="i" viewBox="0 0 24 24" width="10" height="10"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>GET</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <span>© 2026 <a href="/">modded.pw</a></span>
+  <span>Operated by Serphant</span>
+</footer>
+
+<script src="js/games.js"></script>
+<script src="js/files.js"></script>
+<script src="js/site.js"></script>
+
+<div id="copy-popup" class="copy-popup">Copied!</div>
+
+</body>
+</html>
