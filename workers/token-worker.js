@@ -79,7 +79,10 @@ async function generateR2PresignedUrl(fileId, env) {
   const dateStr   = now.toISOString().slice(0, 10).replace(/-/g, '');  // YYYYMMDD
   const timeStr   = now.toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'; // ISO compact
 
-  const encodedKey  = encodeURIComponent(fileId);
+  const encodedKey = fileId
+  .split('/')
+  .map(encodeURIComponent)
+  .join('/');
   const expiresIn   = TOKEN_TTL;
 
   const credScope   = `${dateStr}/${region}/${service}/aws4_request`;
@@ -93,10 +96,12 @@ async function generateR2PresignedUrl(fileId, env) {
     'X-Amz-SignedHeaders': 'host',
   });
 
+  const sortedQuery = new URLSearchParams([...queryParams.entries()].sort());
+  
   const canonicalRequest = [
     'GET',
     `/${bucket}/${encodedKey}`,
-    queryParams.toString(),
+    sortedQuery.toString(),
     `host:${host}\n`,
     'host',
     'UNSIGNED-PAYLOAD',
