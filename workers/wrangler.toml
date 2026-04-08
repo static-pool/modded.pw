@@ -1,0 +1,23 @@
+name       = "modded-pw-worker"
+main       = "workers/token-worker.js"
+account_id = "b8a0b76410bafb431e6d19eed21ba237"
+compatibility_date = "2026-01-01"
+
+# ── R2 bucket binding ──────────────────────────────────────────────
+# The Worker accesses R2 via env.R2
+[[r2_buckets]]
+binding     = "R2"
+bucket_name = "modded-pw-files"
+
+# ── Routes ─────────────────────────────────────────────────────────
+# Worker only handles /api/* and /dl/* — static files served by Pages
+[[routes]]
+pattern = "modded.pw/api/*"
+zone_name = "modded.pw"
+
+[[routes]]
+pattern = "modded.pw/dl/*"
+zone_name = "modded.pw"
+
+[vars]
+ALLOWED_ORIGIN = "https://modded.pw"
