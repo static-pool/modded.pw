@@ -1,28 +1,3 @@
-/**
- * modded.pw — Cloudflare Worker
- * ─────────────────────────────────────────────────────────────────
- * Handles two routes:
- *   POST /api/token  { fileId }  →  { url: "https://r2-presigned..." }
- *   GET  /dl/:fileId             →  redirect to presigned R2 URL
- *
- * DEPLOY:
- *   wrangler deploy
- *
- * ENVIRONMENT VARIABLES (set in Cloudflare dashboard or wrangler.toml):
- *   TOKEN_SECRET      — random 32+ char string for HMAC signing
- *   R2_ACCOUNT_ID     — your Cloudflare account ID
- *   R2_ACCESS_KEY_ID  — R2 API token key ID
- *   R2_SECRET_KEY     — R2 API token secret
- *   R2_BUCKET_NAME    — your R2 bucket name
- *   ALLOWED_ORIGIN    — your site origin, e.g. https://modded.pw
- *
- * BINDINGS (wrangler.toml):
- *   [[r2_buckets]]
- *   binding = "R2"
- *   bucket_name = "modded-pw-files"
- * ─────────────────────────────────────────────────────────────────
- */
-
 const TOKEN_TTL = 60;  // seconds a presigned URL stays valid
 
 export default {
