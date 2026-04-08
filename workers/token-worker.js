@@ -79,28 +79,38 @@ async function generateR2PresignedUrl(fileId, env) {
   const dateStr   = now.toISOString().slice(0, 10).replace(/-/g, '');  // YYYYMMDD
   const timeStr   = now.toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'; // ISO compact
 
-  const encodedKey  = encodeURIComponent(fileId);
   const expiresIn   = TOKEN_TTL;
 
   const credScope   = `${dateStr}/${region}/${service}/aws4_request`;
   const credential  = `${keyId}/${credScope}`;
 
-  const queryParams = new URLSearchParams({
-    'X-Amz-Algorithm':     'AWS4-HMAC-SHA256',
-    'X-Amz-Credential':    credential,
-    'X-Amz-Date':          timeStr,
-    'X-Amz-Expires':       String(expiresIn),
-    'X-Amz-SignedHeaders': 'host',
-  });
+  const encodedKey = fileId
+  .split('/')
+  .map(encodeURIComponent)
+  .join('/');
 
-  const canonicalRequest = [
-    'GET',
-    `/${encodedKey}`,
-    queryParams.toString(),
-    `host:${host}\n`,
-    'host',
-    'UNSIGNED-PAYLOAD',
-  ].join('\n');
+const queryParams = new URLSearchParams({
+  'X-Amz-Algorithm': 'AWS4-HMAC-SHA256',
+  'X-Amz-Credential': credential,
+  'X-Amz-Date': timeStr,
+  'X-Amz-Expires': String(expiresIn),
+  'X-Amz-SignedHeaders': 'host',
+  'X-Amz-Content-Sha256': 'UNSIGNED-PAYLOAD',
+});
+
+const canonicalQuery = [...queryParams.entries()]
+  .sort(([a],[b]) => a.localeCompare(b))
+  .map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+  .join('&');
+
+const canonicalRequest = [
+  'GET',
+  `/${bucket}/${encodedKey}`,
+  canonicalQuery,
+  `host:${host}\n`,
+  'host',
+  'UNSIGNED-PAYLOAD',
+].join('\n');
 
   const encoder = new TextEncoder();
 
